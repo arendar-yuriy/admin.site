@@ -2,6 +2,7 @@
 
 админка сделана отдельным приложением от сайта, чтобы был один репозиторий и не нужно было переносить все правки
 
+пример файла .env 
 
 ```html
 APP_ENV=local
@@ -43,3 +44,13 @@ MAIL_USERNAME=null
 MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 ```
+
+Для установки затаскиваем репоризиторий, прописуем нужные параметры в .env, затем:
+
+```html
+composer install
+php artisan migrate
+php artisan db:seed
+```
+
+вроде все
