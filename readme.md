@@ -1,27 +1,40 @@
-# Laravel PHP Framework
+<addr>
+APP_ENV=local
+APP_DEBUG=true
+APP_KEY=LbAIGC5LEVU5HC64BLpGq2KUfVGjqCqc
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+DB_CONNECTION=pgsql
+DB_HOST=localhost
+DB_PORT=5432
+DB_DATABASE=dobriysantehnik
+DB_USERNAME=postgres
+DB_PASSWORD=12345
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+SITE_URL=http://site.dev
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+LANG_LIST=ru
+DEFAULT_LOCALE=ru
 
-## Official Documentation
+IMG_URL=http://site.dev/img/common/
+IMG_PATH=/var/www/site/public/img/common/
+DROPZONER_UPLOAD_PATH=/var/www/site/public/img/common/
+ELFINDER_PATH=/var/www/site/public/img/common/content
+ELFINDER_URL=http://site.dev/img/common/content
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+CKEDITOR_CSS=http://site.dev/css/app.css
 
-## Contributing
+CACHE_DRIVER=array
+SESSION_DRIVER=file
+QUEUE_DRIVER=sync
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+MAIL_DRIVER=smtp
+MAIL_HOST=mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+</addr>
