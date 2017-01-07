@@ -1,0 +1,1 @@
+<div class="media-list content-group-lg stack-media-on-mobile">{val}</div>

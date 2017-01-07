@@ -1,0 +1,23 @@
+.active-button{
+    top: -3px;
+}
+
+.edit-button{
+
+}
+
+.remove-button{
+    margin-left: 10px;
+}
+
+.edit-buttons{
+    margin: 5px 0 0 0;
+}
+
+.lang-dropdown{
+    margin: 8px 20px 0 0;
+}
+
+li.active span {
+    color: #000000;
+}

@@ -1,0 +1,10 @@
+/vendor
+/node_modules
+/public/storage
+/public/img/common
+Homestead.yaml
+Homestead.json
+.env
+/.idea
+_ide_helper.php
+/public/favicon.ico

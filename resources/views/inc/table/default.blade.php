@@ -1,0 +1,1 @@
+<td>@if (isset($aRow[$key] )){{ $aRow[$key] }} @else -> {{ $aRow['id'] }} @endif</td>
