@@ -1,27 +1,56 @@
-# Laravel PHP Framework
+#Админка сайта
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+админка сделана отдельным приложением от сайта, чтобы был один репозиторий и не нужно было переносить все правки
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+пример файла .env 
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+```html
+APP_ENV=local
+APP_DEBUG=true
+APP_KEY=app-key
 
-## Official Documentation
+DB_CONNECTION=pgsql
+DB_HOST=localhost
+DB_PORT=5432
+DB_DATABASE=db
+DB_USERNAME=root
+DB_PASSWORD=12345
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+SITE_URL=http://site.dev
 
-## Contributing
+LANG_LIST=ru,en,uk
+DEFAULT_LOCALE=ru
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+IMG_URL=http://site.dev/img/common/
+IMG_PATH=/var/www/site/public/img/common/
+DROPZONER_UPLOAD_PATH=/var/www/site/public/img/common/
+ELFINDER_PATH=/var/www/site/public/img/common/content
+ELFINDER_URL=http://site.dev/img/common/content
 
-## Security Vulnerabilities
+CKEDITOR_CSS=http://site.dev/css/app.css
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+CACHE_DRIVER=array
+SESSION_DRIVER=file
+QUEUE_DRIVER=sync
 
-## License
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+MAIL_DRIVER=smtp
+MAIL_HOST=mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+```
+
+Для установки затаскиваем репоризиторий, прописуем нужные параметры в .env, затем:
+
+```html
+composer install
+php artisan migrate
+php artisan db:seed
+```
+
+вроде все
