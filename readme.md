@@ -1,27 +1,27 @@
 ```html
 APP_ENV=local
 APP_DEBUG=true
-APP_KEY=LbAIGC5LEVU5HC64BLpGq2KUfVGjqCqc
+APP_KEY=app-key
 
 DB_CONNECTION=pgsql
 DB_HOST=localhost
 DB_PORT=5432
-DB_DATABASE=dobriysantehnik
-DB_USERNAME=postgres
+DB_DATABASE=db
+DB_USERNAME=root
 DB_PASSWORD=12345
 
-SITE_URL=http://dobriysantehnik.dev
+SITE_URL=http://site.dev
 
-LANG_LIST=ru
+LANG_LIST=ru,en,uk
 DEFAULT_LOCALE=ru
 
-IMG_URL=http://dobriysantehnik.dev/img/common/
-IMG_PATH=/var/www/dobriysantehnik/public/img/common/
-DROPZONER_UPLOAD_PATH=/var/www/dobriysantehnik/public/img/common/
-ELFINDER_PATH=/var/www/dobriysantehnik/public/img/common/content
-ELFINDER_URL=http://dobriysantehnik.dev/img/common/content
+IMG_URL=http://site.dev/img/common/
+IMG_PATH=/var/www/site/public/img/common/
+DROPZONER_UPLOAD_PATH=/var/www/site/public/img/common/
+ELFINDER_PATH=/var/www/site/public/img/common/content
+ELFINDER_URL=http://site.dev/img/common/content
 
-CKEDITOR_CSS=http://dobriysantehnik.dev/css/app.css
+CKEDITOR_CSS=http://site.dev/css/app.css
 
 CACHE_DRIVER=array
 SESSION_DRIVER=file
