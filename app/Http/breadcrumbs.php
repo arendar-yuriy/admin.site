@@ -151,13 +151,28 @@ Breadcrumbs::register('comments', function($breadcrumbs)
     $breadcrumbs->push(trans('app.comments'), route('comments',['type'=>$type]));
     if($id===null){
 
-        $id = \App\Comments::where('type',$type)->orderBy('created_at','desc')->pluck('content_id')->first();
+        if ($type === null){
+            $comment = \App\Comments::orderBy('created_at','desc')->first();
+            if ($comment !== null){
+                $id = $comment->content_id;
+                $type = $comment->type;
+            }
+
+        }
+        else{
+            $comment = \App\Comments::where('type',$type)->orderBy('created_at','desc')->first();
+            if ($comment !== null){
+                $id = $comment->content_id;
+            }
+        }
+
+
         if($type == 'content')
             $content = \App\Content::find($id);
         if($type == 'gallery')
             $content = \App\Gallery::find($id);
 
-        if($content !== null)
+        if(isset($content) && $content !== null)
             $breadcrumbs->push($content->name, route('comments',['id'=>$content->id,'type'=>$type]));
     }else{
         if($type == 'content')
@@ -265,6 +280,25 @@ Breadcrumbs::register('edit_gallery', function($breadcrumbs)
         $breadcrumbs->push($item->name, route('edit_gallery',['id'=>$item->id]));
     }
     $breadcrumbs->push($folder->name, route('edit_gallery',['id'=>$folder->id]));
+});
+
+Breadcrumbs::register('gallery_add', function($breadcrumbs)
+{
+    $breadcrumbs->push(trans('app.gallery'), route('gallery'));
+
+    $id = Route::current()->parameter('id');
+
+    $folder = \App\Gallery::find($id);
+
+    if($folder !== null){
+        $listFolder = $folder->ancestors()->get();
+        foreach($listFolder as $item){
+            $breadcrumbs->push($item->name, route('edit_gallery',['id'=>$item->id]));
+        }
+        $breadcrumbs->push($folder->name, route('edit_gallery',['id'=>$folder->id]));
+    }
+
+    $breadcrumbs->push(trans('app.add_gallery_folder'), route('gallery_add',['id'=>$folder->id]));
 });
 
 Breadcrumbs::register('gallery_crop_view', function($breadcrumbs)

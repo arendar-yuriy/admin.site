@@ -18,7 +18,7 @@ class InitApplication
     {
         if( \Auth::user() !== null && \Auth::user()->hasRole('ban')) abort(403);
 
-        Main::init();
+        initApplication();
         return $next($request);
     }
 }

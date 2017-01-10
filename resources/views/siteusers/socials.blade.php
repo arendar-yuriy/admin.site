@@ -24,10 +24,10 @@
                         <td>
                             @if($value->photo)
                                 <a href="{{ Config::get('admin.image_url').$value->photo }}" data-popup="lightbox">
-                                    {!! MediaImage::getImage($value->photo,94,null,['class'=>'img-rounded']) !!}
+                                    {!! getImage($value->photo,94,null,['class'=>'img-rounded']) !!}
                                 </a>
                             @else
-                                {!! MediaImage::getImage('',94,null,['class'=>'img-rounded']) !!}
+                                {!! getImage('',94,null,['class'=>'img-rounded']) !!}
                             @endif
                          </td>
                         <td>{{ $value->firstname }}</td>

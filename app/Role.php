@@ -20,19 +20,6 @@ class Role extends LaratrustRole
      */
     protected $dates = ['deleted_at'];
 
-    public $validation_rules = [
-
-
-        'name' => [
-            'required:roles',
-            'regex:/^[a-z\d\_-]+$/',
-            'max:255'
-        ],
-        'display_name' => 'required',
-        'description' => 'required',
-        'permission' => 'required',
-    ];
-
     public function getBy()
     {
         if(\Auth::user() !== null)

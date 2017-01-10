@@ -166,13 +166,13 @@ class ContentController extends BaseController
         $data = $request->all();
         $category_id = \Route::current()->parameter('structure_id');
 
-        $alias = Cpu::generate($data['name'],$this->model);
+        $alias = generateAlias($data['name'],$this->model);
 
         $data['alias_ru'] = $alias['ru'];
         $data['alias_en'] =  $alias['en'];
 
 
-        $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
+        $data = prepareDataToAdd($this->model->translatedAttributes,$data);
 
         $content = $this->model->create($data);
 
@@ -194,7 +194,7 @@ class ContentController extends BaseController
         $cs->position = $max + 1;
         $cs->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.content was created'),trans('app.Created'),'success'
         );
@@ -228,7 +228,7 @@ class ContentController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_content',['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

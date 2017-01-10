@@ -156,7 +156,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            {!! MediaImage::getImage($unit->image,1600,null,['crop'=>$unit->is_crop,'alt'=>$unit->name,'style'=>'max-width: 100%']) !!}
+                            {!! getImage($unit->image,1600,null,['crop'=>$unit->is_crop,'alt'=>$unit->name,'style'=>'max-width: 100%']) !!}
                         </div>
 
                         <div class="col-md-6">

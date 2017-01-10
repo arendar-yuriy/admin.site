@@ -22,21 +22,6 @@ class SiteUser extends Base
         'country',
     ];
 
-    public $validation_rules = [
-
-
-        'email' => [
-            'required:users',
-            'email',
-            'max:255'
-        ],
-        'name' => [
-            'required:users',
-            'max:255'
-        ]
-
-    ];
-
     /**
      * The attributes that should be hidden for arrays.
      *

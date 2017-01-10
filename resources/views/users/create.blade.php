@@ -169,7 +169,7 @@
                             </div>
                         </div>
 
-                        {!! \App\Helpers\Main::getImageField('image','',trans('app.image')) !!}
+                        {!! imageField('image','',trans('app.image')) !!}
 
 
                         <div class="text-right">

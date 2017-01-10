@@ -75,6 +75,23 @@
             <span class="help-block" id="controller-error"></span>
         </div>
     </div>
+    @if(@$content->controller && !empty(Config::get('admin.templates.'.$content->controller)))
+        <div class="form-group ">
+            <label class="control-label col-lg-2 text-semibold">{{ trans('app.template') }}</label>
+            <div class="col-lg-10">
+                <select name="template"  cf="true" class="select" id="template">
+                    <option value="">{{ trans('app.select') }}</option>
+                    @foreach(Config::get('admin.templates.'.$content->controller) as $key=>$value)
+                        <option @if(@$content->template == $key) selected @endif value="{{ $key }}">{{ trans('app.'.$value) }}</option>
+                    @endforeach
+                </select>
+                <div class="form-control-feedback" id="controller-error-icon">
+                    <i class="icon-cancel-circle2"></i>
+                </div>
+                <span class="help-block" id="controller-error"></span>
+            </div>
+        </div>
+    @endif
 
     <script>
         $(document).ready(function () {
@@ -137,9 +154,9 @@
     </script>
 
     @if(@$translation->image)
-        {!! \App\Helpers\Main::getImageField('image',$translation->image,trans('app.image'),$translation->is_crop) !!}
+        {!! imageField('image',$translation->image,trans('app.image'),$translation->is_crop) !!}
     @else
-        {!! \App\Helpers\Main::getImageField('image','',trans('app.image')) !!}
+        {!! imageField('image','',trans('app.image')) !!}
     @endif
 
     <div class="form-group ">

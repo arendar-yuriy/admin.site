@@ -79,7 +79,7 @@ class SiteUsersController extends BaseController
 
         $content->save();
 
-        return Main::redirect('','302',trans('app.password changed'),trans('app.Saved'),'success');
+        return redirectApp('','302',trans('app.password changed'),trans('app.Saved'),'success');
     }
 
     /**
@@ -95,7 +95,7 @@ class SiteUsersController extends BaseController
 
         $user = SiteUser::create($input);
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$user->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
@@ -131,7 +131,7 @@ class SiteUsersController extends BaseController
         $user->update($input);
 
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$user->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

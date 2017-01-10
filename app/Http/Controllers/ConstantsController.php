@@ -85,7 +85,7 @@ class ConstantsController extends BaseController
 
         $this->model->create($data);
 
-        return Main::redirect(
+        return redirectApp(
             Route($this->controller,['group'=>$group]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
         );
@@ -126,6 +126,6 @@ class ConstantsController extends BaseController
         $data = $this->model->find($id);
         $data->group = $request->get('group');
         $data->save();
-        return Main::redirect( Route($this->controller,['group'=>$request->get('group')]));
+        return redirectApp( Route($this->controller,['group'=>$request->get('group')]));
     }
 }

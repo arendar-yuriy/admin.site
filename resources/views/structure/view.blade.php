@@ -47,8 +47,8 @@
             <div class="col-lg-2">
                 <div class="thumbnail">
                     <div class="thumb">
-                        <a href="{{ MediaImage::getImageUrl($translation->image) }}" data-popup="lightbox">
-                            {!! MediaImage::getImage($translation->image,218) !!}
+                        <a href="{{ getImageUrl($translation->image) }}" data-popup="lightbox">
+                            {!! getImage($translation->image,218) !!}
                         </a>
                     </div>
                 </div>

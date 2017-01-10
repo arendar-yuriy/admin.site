@@ -15,7 +15,7 @@
                                 $photo = '';
                             ?>
                                 @if(!empty($photo))
-                                    {!! MediaImage::getImage($photo,211,211,['alt'=>$user->name.' '.$user->lastname]) !!}
+                                    {!! getImage($photo,211,211,['alt'=>$user->name.' '.$user->lastname]) !!}
                                 @else
                                     <img id="avatar" src="/img/placeholder.jpg" alt="{{ $user->name }} {{ $user->lastname }}">
                                 @endif

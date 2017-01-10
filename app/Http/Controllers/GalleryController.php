@@ -186,7 +186,7 @@ class GalleryController extends BaseController
             ]);
         }
 
-        return Main::redirect('','302', trans('app.data saved'),trans('app.Saved'),'success');
+        return redirectApp('','302', trans('app.data saved'),trans('app.Saved'),'success');
     }
 
     public function postStore(Requests\GalleryRequest $request)
@@ -199,17 +199,17 @@ class GalleryController extends BaseController
             $data['parent_id'] = $parent_id;
         }
 
-        $alias = Cpu::generate($data['name'],$this->model);
+        $alias = generateAlias($data['name'],$this->model);
 
         $data['alias_ru'] = $alias['ru'];
         $data['alias_en'] =  $alias['en'];
 
         if($this->isMultiLang)
-            $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
+            $data = prepareDataToAdd($this->model->translatedAttributes,$data);
 
         $content = $this->model->create($data);
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
         );
@@ -235,7 +235,7 @@ class GalleryController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
@@ -296,7 +296,7 @@ class GalleryController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_image_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
@@ -315,7 +315,7 @@ class GalleryController extends BaseController
         if(\Request::ajax()){
             $item = GalleryUnit::find($id);
             $item->delete();
-            return Main::redirect('','302',trans('app.Deleted'));
+            return redirectApp('','302',trans('app.Deleted'));
         }else{
             return redirect('/');
         }
@@ -333,16 +333,16 @@ class GalleryController extends BaseController
 
         $data_crop = json_decode($request->get('data_crop'),true);
 
-        if(\File::exists(Crop::getCropPath($data->image)))
-            unlink(Crop::getCropPath($data->image));
+        if(\File::exists(getCropPath($data->image)))
+            unlink(getCropPath($data->image));
 
         if($request->get('data_crop')=='' && $request->get('data_crop_info')==''){
             $data->is_crop = 0;
             $data->data_crop = '';
             $data->data_crop_info = '';
         }else{
-            Crop::clearCropThumbs($data->image);
-            Crop::doCrop($data->image,$data_crop);
+            clearCropThumbs($data->image);
+            doCrop($data->image,$data_crop);
             $data->is_crop = 1;
             $data->data_crop = $request->get('data_crop');
             $data->data_crop_info = $request->get('data_crop_info');
@@ -351,7 +351,7 @@ class GalleryController extends BaseController
 
         $data->save();
 
-        return Main::redirect('','302',trans('app.data saved'),trans('app.Saved'),'success');
+        return redirectApp('','302',trans('app.data saved'),trans('app.Saved'),'success');
     }
 
     /**
@@ -386,7 +386,7 @@ class GalleryController extends BaseController
 
         }
 
-        return Main::redirect('','302',trans('app.Deleted'));
+        return redirectApp('','302',trans('app.Deleted'));
 
     }
 
@@ -410,7 +410,7 @@ class GalleryController extends BaseController
 
         }
 
-        return Main::redirect('','302',trans('app.Set active'));
+        return redirectApp('','302',trans('app.Set active'));
     }
 
     /**
@@ -433,7 +433,7 @@ class GalleryController extends BaseController
 
         }
 
-        return Main::redirect('','302',trans('app.Remove active'));
+        return redirectApp('','302',trans('app.Remove active'));
 
     }
 

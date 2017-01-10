@@ -112,11 +112,11 @@ class SlidersController extends BaseController
         $model = new SliderUnits();
 
         if($this->isMultiLang)
-            $data = Main::prepareDataToAdd($model->translatedAttributes,$data);
+            $data = prepareDataToAdd($model->translatedAttributes,$data);
 
         $content = $model->create($data);
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller.'_unit',['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
         );
@@ -149,7 +149,7 @@ class SlidersController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller.'_unit',['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
@@ -161,17 +161,17 @@ class SlidersController extends BaseController
 
         $data_crop = json_decode($request->get('data_crop'),true);
 
-        if(\File::exists(Crop::getCropPath($data->image)))
-            unlink(Crop::getCropPath($data->image));
+        if(\File::exists(getCropPath($data->image)))
+            unlink(getCropPath($data->image));
 
         if($data_crop =='' && $request->get('data_crop_info')==''){
             $data->is_crop = 0;
             $data->data_crop = '';
             $data->data_crop_info = '';
         }else{
-            Crop::clearCropThumbs($data->image);
+            clearCropThumbs($data->image);
 
-            Crop::doCrop($data->image,$data_crop);
+            doCrop($data->image,$data_crop);
 
             $data->is_crop = 1;
             $data->data_crop = $request->get('data_crop');
@@ -181,7 +181,7 @@ class SlidersController extends BaseController
 
         $data->save();
 
-        return Main::redirect(route('edit_'.$this->controller,['id'=>$data->slider_id]),'302',trans('app.Image cropped'),trans('app.Saved'),'success');
+        return redirectApp(route('edit_'.$this->controller,['id'=>$data->slider_id]),'302',trans('app.Image cropped'),trans('app.Saved'),'success');
     }
 
     public function postGetView(Request $request,$id)
@@ -198,7 +198,7 @@ class SlidersController extends BaseController
             $content->save();
         }
 
-        return Main::redirect(route($this->controller.'_crop_view',['id'=>$content->id]));
+        return redirectApp(route($this->controller.'_crop_view',['id'=>$content->id]));
     }
 
     public function getGetView($id)
@@ -237,7 +237,7 @@ class SlidersController extends BaseController
             ]);
             $item->delete();
 
-            return Main::redirect('','302',trans('app.Deleted'));
+            return redirectApp('','302',trans('app.Deleted'));
         }else{
             return redirect('/');
         }
@@ -265,11 +265,11 @@ class SlidersController extends BaseController
     {
         $data = $request->all();
 
-        $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
+        $data = prepareDataToAdd($this->model->translatedAttributes,$data);
 
         $content = $this->model->create($data);
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
         );
@@ -295,7 +295,7 @@ class SlidersController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

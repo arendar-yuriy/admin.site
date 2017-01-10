@@ -16,8 +16,6 @@ class Basket extends Model
         'basket_name',
     ];
 
-    public $validation_rules = [];
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */

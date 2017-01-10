@@ -53,24 +53,6 @@ class User extends Authenticatable
         'password', 'remember_token'
     ];
 
-    public $validation_rules = [
-
-
-        'email' => [
-            'required:admin_users',
-            'email',
-            'max:255'
-        ],
-        'roles' => [
-            'required',
-        ],
-        'name' => [
-            'required:admin_users',
-            'max:255'
-        ]
-
-    ];
-
     public function getBy()
     {
         if(\Auth::user() !== null)

@@ -3,7 +3,7 @@
     <div class="thumbnail">
         <div class="thumb thumb-rounded thumb-slide">
             @if($content->image)
-                {!! MediaImage::getImage($content->image,211,211,['id'=>'avatar','crop'=>$content->is_crop,'alt'=>$content->name.' '.$content->lastname]) !!}
+                {!! getImage($content->image,211,211,['id'=>'avatar','crop'=>$content->is_crop,'alt'=>$content->name.' '.$content->lastname]) !!}
             @else
                 <img id="avatar" src="/img/placeholder.jpg" alt="{{ $content->name }} {{ $content->lastname }}">
             @endif

@@ -87,7 +87,7 @@ class BasketController extends BaseController
                 $item->delete();
             }
 
-            return Main::redirect('','302',trans('basket.Deleted all items'));
+            return redirectApp('','302',trans('basket.Deleted all items'));
         }else{
             return redirect('/');
         }
@@ -116,7 +116,7 @@ class BasketController extends BaseController
 
         }
 
-        return Main::redirect('','302',trans('basket.Deleted'));
+        return redirectApp('','302',trans('basket.Deleted'));
 
 
     }
@@ -137,7 +137,7 @@ class BasketController extends BaseController
 
             $item->delete();
 
-            return Main::redirect('','302',trans('app.Deleted'));
+            return redirectApp('','302',trans('app.Deleted'));
         }else{
             return redirect('/');
         }
@@ -159,7 +159,7 @@ class BasketController extends BaseController
             if($recovery !== null) $recovery->restore();
 
             $item->delete();
-            return Main::redirect('','302',trans('basket.Restored'));
+            return redirectApp('','302',trans('basket.Restored'));
         }else{
             return redirect('/');
         }
@@ -185,7 +185,7 @@ class BasketController extends BaseController
                 $item->delete();
             }
 
-            return Main::redirect('','302',trans('basket.All items was restored'));
+            return redirectApp('','302',trans('basket.All items was restored'));
         }else{
             return redirect('/');
         }
@@ -208,6 +208,6 @@ class BasketController extends BaseController
             }
         }
 
-        return Main::redirect('', '302', trans('basket.Items was restored'));
+        return redirectApp('', '302', trans('basket.Items was restored'));
     }
 }

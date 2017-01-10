@@ -7,7 +7,6 @@ class FormLang{
     private static $currentLocal='';
 
     public static function getCurrentLang(){
-        //dd(\LaravelLocalization::getSupportedLocales()) ;
         $lang = \Session::get('current_admin_form_locale');
         if(!$lang && self::$currentLocal !=''){
             return self::$currentLocal;
@@ -29,7 +28,7 @@ class FormLang{
     public static function setCurrentLang($lang){
         \Session::set('current_admin_form_locale',$lang);
         self::$currentLocal = $lang;
-        return Main::redirect('');
+        return redirectApp('');
     }
 
 }

@@ -42,20 +42,6 @@ class Gallery extends Tree
         'tags',
     ];
 
-
-    public $validation_rules = [
-
-        'alias_customer'=>[
-            'regex:/^[a-zа-я\d-]+$/',
-            'max:255'
-        ],
-
-        'name' => [
-            'required:galleries_translation',
-            'max:255'
-        ],
-    ];
-
     public function structure()
     {
         return $this->belongsMany(Structure::class,'structure_id');

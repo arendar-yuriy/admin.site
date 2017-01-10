@@ -46,7 +46,7 @@
                                         <span class="media-annotation pull-right">{{ $item->created_at->diffForHumans() }}</span>
                                     </a>
 
-                                    <span class="text-muted">{{ \App\Helpers\Main::cut_text($item->content,100) }}</span>
+                                    <span class="text-muted">{{ cutText($item->content,100) }}</span>
                                 </div>
                             </li>
                         @endforeach
@@ -79,7 +79,7 @@
                                         <img src="{{ \Config::get('app.site_url').'/img/design/rs-avatar-64x64.jpg' }}" class="img-circle img-sm" alt="">
                                     @else
                                         @if($item->user !== null)
-                                            {!! MediaImage::getImage($item->user->socials()->where('name', $item->user->social_network)->first()->photo,64,64,['class'=>'img-circle img-sm','alt'=>$item->user->name]) !!}
+                                            {!! getImage($item->user->socials()->where('name', $item->user->social_network)->first()->photo,64,64,['class'=>'img-circle img-sm','alt'=>$item->user->name]) !!}
                                         @else
                                             <img src="{{ \Config::get('app.site_url').'/img/design/rs-avatar-64x64.jpg' }}" class="img-circle img-sm" alt="">
                                         @endif
@@ -96,7 +96,7 @@
                                         <span class="media-annotation pull-right">{{ $item->created_at->diffForHumans() }}</span>
                                     </a>
 
-                                    <span class="text-muted">{{ \App\Helpers\Main::cut_text($item->comment,100) }}</span>
+                                    <span class="text-muted">{{ cutText($item->comment,100) }}</span>
                                 </div>
                             </li>
                         @endforeach

@@ -118,7 +118,7 @@ class StructureController extends BaseController
     public function postStore(StructureRequest $request)
     {
         $data = $request->all();
-        $alias = Cpu::generate($data['name'],$this->model);
+        $alias = generateAlias($data['name'],$this->model);
         if(!empty($data['menu_level']))
             $data['menu_level'] = implode(',',$data['menu_level']);
         else
@@ -128,7 +128,7 @@ class StructureController extends BaseController
 
         $data_main = [];
 
-        $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
+        $data = prepareDataToAdd($this->model->translatedAttributes,$data);
 
         foreach($data as $key=>$value){
             if(!in_array($key,array_keys(\LaravelLocalization::getSupportedLocales()))){
@@ -155,7 +155,7 @@ class StructureController extends BaseController
                 Gallery::create(['name'=>$content->name,'structure_id'=>$content->id,'image'=>$content->image]);
         }
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_structure',['id'=>$content->id]),
             '302',trans('app.structure was created'),trans('app.Saved'),'success'
         );
@@ -185,7 +185,7 @@ class StructureController extends BaseController
                 Gallery::create(['name'=>$content->name,'structure_id'=>$content->id,'image'=>$content->image]);
         }
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_structure',['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

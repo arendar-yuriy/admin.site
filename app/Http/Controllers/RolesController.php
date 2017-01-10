@@ -110,7 +110,7 @@ class RolesController extends BaseController
             $role->attachPermission($value);
         }
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$role->id]),
             '302',trans('app.item was created'),trans('app.Role created successfully'),'success'
         );
@@ -156,7 +156,7 @@ class RolesController extends BaseController
             $role->attachPermission($value);
         }
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$role->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

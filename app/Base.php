@@ -14,11 +14,6 @@ class Base extends Model
     use SoftDeletes;
     use BasketTrait;
     use ScopesTrait;
-    /**
-     * validation rules for current model
-     * @var array
-     */
-    public $validation_rules = [];
 
     /**
      * The attributes that should be mutated to dates.

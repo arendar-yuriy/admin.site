@@ -22,16 +22,6 @@ class Permission extends LaratrustPermission
 
     protected $fillable = ['name', 'display_name', 'description'];
 
-    public $validation_rules = [
-        'name' => [
-            'required:roles',
-            'regex:/^[a-z\d\_-]+$/',
-            'max:255'
-        ],
-        'display_name' => 'required',
-        'description' => 'required'
-    ];
-
     public function getBy()
     {
         if(\Auth::user() !== null)

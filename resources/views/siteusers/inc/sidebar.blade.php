@@ -8,7 +8,7 @@
                     $photo = $socials->photo;
             ?>
             @if(!empty($photo))
-                {!! MediaImage::getImage($photo,211,211,['id'=>'avatar','crop'=>$content->is_crop,'alt'=>$content->name.' '.$content->lastname]) !!}
+                {!! getImage($photo,211,211,['id'=>'avatar','crop'=>$content->is_crop,'alt'=>$content->name.' '.$content->lastname]) !!}
             @else
                 <img id="avatar" src="/img/placeholder.jpg" alt="{{ $content->name }} {{ $content->lastname }}">
             @endif

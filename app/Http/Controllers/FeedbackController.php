@@ -84,7 +84,7 @@ class FeedbackController extends BaseController
         $content->answer = $answer;
         $content->status = $status;
         $content->save();
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success');
     }

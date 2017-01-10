@@ -17,7 +17,7 @@ class AjaxController extends Controller{
         if($request->has('language')){
             return FormLang::setCurrentLang($request->get('language'));
         }else{
-            return Main::message(
+            return messageApp(
                 'Wrong parameters!',
                 'Error',
                 'error'

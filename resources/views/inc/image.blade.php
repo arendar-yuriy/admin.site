@@ -4,7 +4,7 @@
         <div class="thumbnail">
             <div class="thumb">
                 @if($image!='')
-                    {!! MediaImage::getImage($image,218,null,['id'=>'img-'.$name,'crop'=>$is_crop]) !!}
+                    {!! getImage($image,218,null,['id'=>'img-'.$name,'crop'=>$is_crop]) !!}
 
                 @else
                     <img id="img-{{ $name }}"  src="/img/placeholder.jpg" alt="">

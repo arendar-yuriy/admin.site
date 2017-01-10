@@ -85,11 +85,11 @@ class BlocksController extends BaseController
         $data = $request->all();
 
         if($this->isMultiLang)
-            $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
+            $data = prepareDataToAdd($this->model->translatedAttributes,$data);
 
         $content = $this->model->create($data);
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
         );
@@ -109,7 +109,7 @@ class BlocksController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_blocks',['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

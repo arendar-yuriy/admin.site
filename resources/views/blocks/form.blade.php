@@ -33,9 +33,9 @@
     </script>
 
     @if(@$translation->image)
-        {!! \App\Helpers\Main::getImageField('image',$translation->image,trans('app.image'),$translation->is_crop) !!}
+        {!! imageField('image',$translation->image,trans('app.image'),$translation->is_crop) !!}
     @else
-        {!! \App\Helpers\Main::getImageField('image','',trans('app.image')) !!}
+        {!! imageField('image','',trans('app.image')) !!}
     @endif
 
     <div class="form-group ">

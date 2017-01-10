@@ -26,13 +26,6 @@ class SliderUnits extends Base
         'data_crop_info'
     ];
 
-    public $validation_rules = [
-        'name' => [
-            'required',
-            'max:255'
-        ]
-    ];
-
 
     public function slider(){
         return $this->belongsTo(Sliders::class);

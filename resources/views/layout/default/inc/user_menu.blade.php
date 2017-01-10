@@ -2,9 +2,9 @@
     <li class="dropdown dropdown-user">
         <a class="dropdown-toggle" data-toggle="dropdown">
             @if(!Auth::user()->image)
-                {!! MediaImage::getImage('',28,28) !!}
+                {!! getImage('',28,28) !!}
             @else
-                {!! MediaImage::getImage(Auth::user()->image,28,28,['crop'=>Auth::user()->is_crop]) !!}
+                {!! getImage(Auth::user()->image,28,28,['crop'=>Auth::user()->is_crop]) !!}
             @endif
             <span>{{ Auth::user()->name }}</span>
             <i class="caret"></i>

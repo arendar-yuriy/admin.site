@@ -38,19 +38,6 @@ class Structure extends Tree
         'data_crop_info'
     ];
 
-    public $validation_rules = [
-
-        'alias_customer'=>[
-            'regex:/^[a-zа-я\d-]+$/',
-            'max:255'
-        ],
-
-        'name' => [
-            'required:contents',
-            'max:255'
-        ],
-    ];
-
     public function contents()
     {
         return $this->belongsToMany(Content::class,'content_structure','structure_id','content_id');

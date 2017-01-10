@@ -24,15 +24,6 @@ class Comments extends Tree
         'ip',
     ];
 
-
-    public $validation_rules = [
-
-        'comment' => [
-            'required:comments',
-            'min:10'
-        ],
-    ];
-
     public function content()
     {
         return $this->belongsTo(Content::class);

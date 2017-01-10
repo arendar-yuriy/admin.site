@@ -126,7 +126,7 @@ class BaseController extends Controller
             ]);
             $item->delete();
 
-            return Main::redirect('','302',trans('app.Deleted'));
+            return redirectApp('','302',trans('app.Deleted'));
         }else{
             return redirect('/');
         }
@@ -165,7 +165,7 @@ class BaseController extends Controller
 
         }
 
-        return Main::redirect('','302',trans('app.Deleted'));
+        return redirectApp('','302',trans('app.Deleted'));
 
     }
 
@@ -189,7 +189,7 @@ class BaseController extends Controller
 
         }
 
-        return Main::redirect('','302',trans('app.Set active'));
+        return redirectApp('','302',trans('app.Set active'));
     }
 
     /**
@@ -212,7 +212,7 @@ class BaseController extends Controller
 
         }
 
-        return Main::redirect('','302',trans('app.Remove active'));
+        return redirectApp('','302',trans('app.Remove active'));
 
     }
 
@@ -309,17 +309,17 @@ class BaseController extends Controller
 
         $data_crop = json_decode($request->get('data_crop'),true);
 
-        if(\File::exists(Crop::getCropPath($data->image)))
-            unlink(Crop::getCropPath($data->image));
+        if(\File::exists(getCropPath($data->image)))
+            unlink(getCropPath($data->image));
 
         if($data_crop =='' && $request->get('data_crop_info')==''){
             $data->is_crop = 0;
             $data->data_crop = '';
             $data->data_crop_info = '';
         }else{
-            Crop::clearCropThumbs($data->image);
+            clearCropThumbs($data->image);
 
-            Crop::doCrop($data->image,$data_crop);
+            doCrop($data->image,$data_crop);
 
             $data->is_crop = 1;
             $data->data_crop = $request->get('data_crop');
@@ -329,7 +329,7 @@ class BaseController extends Controller
 
         $data->save();
 
-        return Main::redirect(route('edit_'.$this->controller,['id'=>$data->id]),'302',trans('app.Image cropped'),trans('app.Saved'),'success');
+        return redirectApp(route('edit_'.$this->controller,['id'=>$data->id]),'302',trans('app.Image cropped'),trans('app.Saved'),'success');
     }
 
     public function postGetView(Request $request,$id)
@@ -346,7 +346,7 @@ class BaseController extends Controller
             $content->save();
         }
 
-        return Main::redirect(route($this->controller.'_crop_view',['id'=>$content->id]));
+        return redirectApp(route($this->controller.'_crop_view',['id'=>$content->id]));
     }
 
     public function getGetView($id)
@@ -366,7 +366,7 @@ class BaseController extends Controller
 
         $item->save();
 
-        return Main::redirect('','302',trans('app.data saved'),trans('app.Saved'),'success');
+        return redirectApp('','302',trans('app.data saved'),trans('app.Saved'),'success');
     }
 
     public function postPosition(Request $request,$id)

@@ -12,21 +12,6 @@ class Tag extends Base
         'text'
     ];
 
-    public $validation_rules = [
-        'text' => [
-            'required:tags',
-            'max:255'
-        ],
-        'alias'=>[
-            'regex:/^[a-zа-я\d-]+$/',
-            'required:tags',
-            'max:255'
-        ],
-        'tags*'=>[
-            'regex:/^[\d]+$/'
-        ]
-    ];
-
     public function contents(){
         return $this->belongsToMany(Content::class,'tags_contents','tag_id','content_id');
     }

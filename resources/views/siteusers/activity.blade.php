@@ -11,12 +11,12 @@
 
                     @foreach($logs as $item)
                         <div class="timeline-date text-muted">
-                            <i class="icon-history position-left"></i> <span class="text-semibold">{{ \App\Helpers\Main::DateLocale('l',strtotime($item->created_at),LaravelLocalization::getCurrentLocale()) }}</span>, {{ \App\Helpers\Main::DateLocale('F',strtotime($item->created_at),LaravelLocalization::getCurrentLocale()) }} {{ \App\Helpers\Main::DateLocale('d',strtotime($item->created_at)) }}
+                            <i class="icon-history position-left"></i> <span class="text-semibold">{{ dateLocale('l',strtotime($item->created_at),LaravelLocalization::getCurrentLocale()) }}</span>, {{ dateLocale('F',strtotime($item->created_at),LaravelLocalization::getCurrentLocale()) }} {{ dateLocale('d',strtotime($item->created_at)) }}
                         </div>
 
                         <div class="timeline-row">
                             <div class="timeline-icon">
-                                {!! MediaImage::getImage($content->socials()->where('name', $content->social_network)->first()->photo,40,40) !!}
+                                {!! getImage($content->socials()->where('name', $content->social_network)->first()->photo,40,40) !!}
                             </div>
 
                             <div class="panel panel-flat border-top-xlg border-top-info  border-bottom-info border-left-info border-right-info">

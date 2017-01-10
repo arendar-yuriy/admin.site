@@ -32,7 +32,7 @@ class SidebarComposer
      */
     public function compose(View $views)
     {
-        $controller = Main::getControllerName();
+        $controller = getControllerName();
         $route = \Route::current();
 
         $build = new TreeBuilder();

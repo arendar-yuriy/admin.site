@@ -43,23 +43,6 @@ class Content extends Base
         'tags',
     ];
 
-    public $validation_rules = [
-        'alias'=>[
-            'regex:/^[a-zа-я\d-]+$/',
-            'max:255'
-        ],
-
-        'alias_customer'=>[
-            'regex:/^[a-zа-я\d-]+$/',
-            'max:255'
-        ],
-
-        'name' => [
-            'required:contents',
-            'max:255'
-        ]
-    ];
-
     public function structures(){
         return $this->belongsToMany(Structure::class,'content_structure','content_id','structure_id');
     }

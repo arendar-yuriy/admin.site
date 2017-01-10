@@ -34,10 +34,18 @@ class CommentsController extends BaseController
         $type = \Route::current()->parameter('type');
 
         if($id === null){
-            $id = $this->model->where('type',$type)->orderBy('created_at','desc')->pluck('content_id')->first();
+            if ($type === null){
+                $comment = $this->model->orderBy('created_at','desc')->first();
+                if ($comment === null) return view($this->controller.'.empty');
+                $id = $comment->content_id;
+                $type = $comment->type;
+            }
+            else{
+                $comment = $this->model->where('type',$type)->orderBy('created_at','desc')->first();
+                if ($comment === null) return view($this->controller.'.empty');
+                $id = $comment->content_id;
+            }
         }
-
-        $content_id = $this->model->where('type',$type)->distinct()->pluck('content_id')->toArray();
 
         if($type=='content'){
 
@@ -106,7 +114,7 @@ class CommentsController extends BaseController
             'parent_id'=>$request->get('parent_id')
         ]);
 
-        return Main::redirect('','302',trans('app.answer was send'),trans('app.Submit'),'success');
+        return redirectApp('','302',trans('app.answer was send'),trans('app.Submit'),'success');
     }
 
 
@@ -116,7 +124,7 @@ class CommentsController extends BaseController
         $data->status = $request->get('status');
         $data->comment = $request->get('comment');
         $data->save();
-        return Main::redirect('','302',trans('app.data saved'),trans('app.Saved'),'success');
+        return redirectApp('','302',trans('app.data saved'),trans('app.Saved'),'success');
     }
 
 }

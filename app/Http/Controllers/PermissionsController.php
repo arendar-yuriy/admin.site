@@ -70,7 +70,7 @@ class PermissionsController extends BaseController
 
         $content = $this->model->create($data);
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
         );
@@ -92,7 +92,7 @@ class PermissionsController extends BaseController
 
         $content->save();
 
-        return Main::redirect(
+        return redirectApp(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.data saved'),trans('app.Saved'),'success'
         );

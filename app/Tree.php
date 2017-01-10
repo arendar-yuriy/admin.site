@@ -13,11 +13,6 @@ class Tree extends Base
     use BasketTrait;
     use ScopesTrait;
     use NodeTrait;
-    /**
-     * validation rules for current model
-     * @var array
-     */
-    public $validation_rules = [];
 
     /**
      * The attributes that should be mutated to dates.

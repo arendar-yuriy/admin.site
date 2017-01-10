@@ -35,9 +35,9 @@
 
 
     @if(@$content->image)
-        {!! \App\Helpers\Main::getImageField('image',$content->image,trans('app.image'),$translation->is_crop) !!}
+        {!! imageField('image',$content->image,trans('app.image'),$translation->is_crop) !!}
     @else
-        {!! \App\Helpers\Main::getImageField('image','',trans('app.image')) !!}
+        {!! imageField('image','',trans('app.image')) !!}
     @endif
 
 
