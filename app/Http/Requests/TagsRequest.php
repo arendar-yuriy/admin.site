@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class TagsRequest extends JsonRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class TagsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

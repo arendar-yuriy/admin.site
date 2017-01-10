@@ -74,6 +74,10 @@ var Main = {
             success: function(data){
                 console.log(data);
                 Main.actionData(data,form);
+            },
+            error: function (data) {
+                console.log(data);
+                Main.actionData(data.responseJSON,form);
             }
         });
 

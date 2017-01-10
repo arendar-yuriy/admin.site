@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class SliderUnitsRequest extends JsonRequest
+use Illuminate\Foundation\Http\FormRequest;
+
+class SliderUnitsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StructureRequest extends JsonRequest
+class StructureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,6 +31,7 @@ class StructureRequest extends JsonRequest
             return [
                 'alias_customer'=>[
                     'regex:/^[a-zа-я\d-]+$/',
+                    'required:structures',
                     ($id !== null) ? Rule::unique('structures')->ignore($id) : Rule::unique('structures'),
                     'max:255'
                 ],
@@ -44,7 +46,6 @@ class StructureRequest extends JsonRequest
                 'alias_customer'=>[
                     'regex:/^[a-zа-я\d-]+$/',
                     ($id !== null) ? Rule::unique('structures')->ignore($id) : Rule::unique('structures'),
-                    'required:structures',
                     'max:255'
                 ],
 
