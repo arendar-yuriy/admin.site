@@ -8,9 +8,8 @@ use App\Helpers\Main;
 use App\Helpers\Table;
 use App\Tag;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
+
 
 class TagsController extends BaseController
 {
@@ -115,14 +114,11 @@ class TagsController extends BaseController
 
         $data['data'] = $tag->contents()->orderBy('created_at', 'desc')->get()->toArray();
 
-
         \App::setLocale($tempo_locale);
 
         $data['header'] = $table->columns;
 
-      //  dd($data);
         $table_view =  $table->getView($data);
-
 
         view()->share('table_content',$table_view->render());
 
@@ -130,11 +126,8 @@ class TagsController extends BaseController
     }
 
 
-    public function postStore(Request $request)
+    public function postStore(Requests\TagsRequest $request)
     {
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
         $name = $request->get('text');
         $alias = \URLify::filter($name);
 
@@ -142,6 +135,22 @@ class TagsController extends BaseController
         return Main::redirect(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
+        );
+    }
+
+    public function postUpdate(Requests\TagsRequest $request, $id)
+    {
+        $content = $this->model->find($id);
+        $data = $request->all();
+
+        foreach($data as $name=>$item)
+            $content->{$name} = $item;
+
+        $content->save();
+
+        return Main::redirect(
+            Route('edit_blocks',['id'=>$content->id]),
+            '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
     }
 

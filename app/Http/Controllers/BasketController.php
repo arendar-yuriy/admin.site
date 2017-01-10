@@ -7,8 +7,6 @@ use App\Helpers\Main;
 use App\Helpers\Table;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-
 class BasketController extends BaseController
 {
     public function __construct(Request $request)
@@ -84,7 +82,7 @@ class BasketController extends BaseController
             foreach($items as $item){
                 $basket = $item->basketable()->withTrashed()->first();
 
-                $basket->forceDelete();
+                if($basket !== null) $basket->forceDelete();
 
                 $item->delete();
             }
@@ -111,7 +109,7 @@ class BasketController extends BaseController
                 $item = $this->model->find($id);
                 $basket = $item->basketable()->withTrashed()->first();
 
-                $basket->forceDelete();
+                if($basket !== null) $basket->forceDelete();
 
                 $item->delete();
             }
@@ -135,7 +133,7 @@ class BasketController extends BaseController
 
             $basket = $item->basketable()->withTrashed()->first();
 
-            $basket->forceDelete();
+            if($basket !== null) $basket->forceDelete();
 
             $item->delete();
 
@@ -158,7 +156,7 @@ class BasketController extends BaseController
 
             $recovery = $item->basketable()->withTrashed()->first();
 
-            $recovery->restore();
+            if($recovery !== null) $recovery->restore();
 
             $item->delete();
             return Main::redirect('','302',trans('basket.Restored'));

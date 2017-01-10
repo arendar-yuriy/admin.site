@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Main;
-use App\Helpers\Table;
+use App\Http\Requests\PermissionRequest;
 use Illuminate\Http\Request;
-use App\Role;
 use App\Permission;
-use DB;
 
 class PermissionsController extends BaseController
 {
@@ -62,7 +60,7 @@ class PermissionsController extends BaseController
      * @param Request $request
      * @return array|string
      */
-    public function postStore(Request $request)
+    public function postStore(PermissionRequest $request)
     {
         $data = $request->all();
         $this->validation->mergeRules('name','unique:permissions');
@@ -75,6 +73,28 @@ class PermissionsController extends BaseController
         return Main::redirect(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
+        );
+    }
+
+    /**
+     * Update current item
+     * @param Request $request
+     * @param $id -  id of current item
+     * @return array|string
+     */
+    public function postUpdate(PermissionRequest $request,$id)
+    {
+        $content = $this->model->find($id);
+        $data = $request->all();
+
+        foreach($data as $name=>$item)
+            $content->{$name} = $item;
+
+        $content->save();
+
+        return Main::redirect(
+            Route('edit_'.$this->controller,['id'=>$content->id]),
+            '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
     }
 }

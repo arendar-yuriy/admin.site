@@ -45,7 +45,7 @@ class ConstantsController extends BaseController
         return view($this->controller.'.create',['type'=>$type]);
     }
 
-    public function postStore(Request $request)
+    public function postStore(Requests\ConstantsRequest $request)
     {
         $type = $request->get('type');
         $group = $request->get('group');
@@ -57,7 +57,6 @@ class ConstantsController extends BaseController
 
                 break;
             case 'enumeration':
-                $this->validation->mergeRules('values','required:'.str_plural($this->controller));
 
                 if(!empty($request->get('values'))){
                     $data['values'] = implode(',',$request->get('values'));
@@ -66,7 +65,6 @@ class ConstantsController extends BaseController
 
                 break;
             case 'multiplicity':
-                $this->validation->mergeRules('values','required:'.str_plural($this->controller));
 
                 if(!empty($request->get('values'))){
                     $data['values'] = implode(',',$request->get('values'));
@@ -75,7 +73,6 @@ class ConstantsController extends BaseController
 
                 break;
             case 'array':
-                $this->validation->mergeRules('values','required:'.str_plural($this->controller));
                 if(!empty($request->get('values'))){
                     $data['values'] = implode(',',$request->get('values'));
                     $data['value'] = json_encode($request->get('data'));
@@ -85,9 +82,6 @@ class ConstantsController extends BaseController
 
                 break;
         }
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
 
         $this->model->create($data);
 

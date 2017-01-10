@@ -10,7 +10,6 @@ use App\Sliders;
 use App\SliderUnits;
 use App\Structure;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 
 class SlidersController extends BaseController
@@ -106,14 +105,11 @@ class SlidersController extends BaseController
      * @param Request $request
      * @return array|string
      */
-    public function postStoreUnit(Request $request,$id)
+    public function postStoreUnit(Requests\SliderUnitsRequest $request,$id)
     {
         $data = $request->all();
 
         $model = new SliderUnits();
-        $validation = \Validator::make($request->all(),$model->validation_rules);
-        if($validation->fails())
-            return $validation->errors()->toJson();
 
         if($this->isMultiLang)
             $data = Main::prepareDataToAdd($model->translatedAttributes,$data);
@@ -132,15 +128,13 @@ class SlidersController extends BaseController
      * @param $id -  id of current item
      * @return array|string
      */
-    public function postUpdateUnit(Request $request,$id)
+    public function postUpdateUnit(Requests\SliderUnitsRequest $request,$id)
     {
         $model = new SliderUnits();
-        $validation = \Validator::make($request->all(),$model->validation_rules);
+
         $content = $model->findOrFail($id);
         $data = $request->all();
 
-        if($validation->fails())
-            return $validation->errors()->toJson();
         if($this->isMultiLang){
             foreach($data as $name=>$item){
                 if(!in_array($name,$model->translatedAttributes))
@@ -260,5 +254,50 @@ class SlidersController extends BaseController
             $item->save();
         }
 
+    }
+
+    /**
+     * Create new record in database for current parts of admin application
+     * @param Request $request
+     * @return array|string
+     */
+    public function postStore(Requests\SliderRequest $request)
+    {
+        $data = $request->all();
+
+        $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
+
+        $content = $this->model->create($data);
+
+        return Main::redirect(
+            Route('edit_'.$this->controller,['id'=>$content->id]),
+            '302',trans('app.item was created'),trans('app.Saved'),'success'
+        );
+    }
+
+    /**
+     * Update current item
+     * @param Request $request
+     * @param $id -  id of current item
+     * @return array|string
+     */
+    public function postUpdate(Requests\SliderRequest $request,$id)
+    {
+        $content = $this->model->find($id);
+        $data = $request->all();
+
+        foreach($data as $name=>$item){
+            if(!in_array($name,$this->model->translatedAttributes))
+                $content->{$name} = $item;
+            else
+                $content->translate($data['locale'])->{$name} =  $item;
+        }
+
+        $content->save();
+
+        return Main::redirect(
+            Route('edit_'.$this->controller,['id'=>$content->id]),
+            '302',trans('app.data saved'),trans('app.Saved'),'success'
+        );
     }
 }

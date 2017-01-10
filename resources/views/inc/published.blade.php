@@ -5,7 +5,7 @@
             <label>
                 <?php if ($published  === null) $published = true?>
                 <input type="checkbox" id="published_switch" class="switchery " @if($published == 1)checked="checked"@endif>
-                {!! Form::hidden('published',$published,['id'=>'published']) !!}
+                {!! Form::hidden('published',($published ? 1 : 0),['id'=>'published']) !!}
             </label>
         </div>
 

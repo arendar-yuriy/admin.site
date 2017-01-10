@@ -10,9 +10,7 @@ use App\Helpers\Main;
 use App\Helpers\TreeBuilder;
 use App\Tag;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Http\Requests\StructureRequest;
 
 class StructureController extends BaseController
 {
@@ -47,8 +45,6 @@ class StructureController extends BaseController
 
         $editTemplate = false;
         $mainTemplate = view('structure.templates.main')->render();
-        $mainSingle = '';
-        $mainMulti = '';
 
         if(\Auth::user()->can([$this->controller.'-add-delete'])){
             $editTemplate = true;
@@ -119,13 +115,9 @@ class StructureController extends BaseController
         return view('structure.edit',['content'=>$content,'translation'=>$content_lang]);
     }
 
-    public function postStore(Request $request)
+    public function postStore(StructureRequest $request)
     {
         $data = $request->all();
-
-        $this->validation->mergeRules('alias_customer','unique:structures');
-        if($data['alias_priority']==1)
-            $this->validation->mergeRules('alias_customer','required:structures');
         $alias = Cpu::generate($data['name'],$this->model);
         if(!empty($data['menu_level']))
             $data['menu_level'] = implode(',',$data['menu_level']);
@@ -135,9 +127,6 @@ class StructureController extends BaseController
         $data['alias_en'] =  $alias['en'];
 
         $data_main = [];
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
 
         $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
 
@@ -172,7 +161,7 @@ class StructureController extends BaseController
         );
     }
 
-    public function postUpdate(Request $request,$id)
+    public function postUpdate(StructureRequest $request,$id)
     {
         $content = $this->model->find($id);
         $data = $request->all();
@@ -180,11 +169,6 @@ class StructureController extends BaseController
             $data['menu_level'] = implode(',',$data['menu_level']);
         else
             $data['menu_level'] = '';
-        if($data['alias_priority']==1)
-            $this->validation->mergeRules('alias_customer','required:structures');
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
 
         foreach($data as $name=>$item){
             if(!in_array($name,$this->model->translatedAttributes))
@@ -194,6 +178,12 @@ class StructureController extends BaseController
         }
 
         $content->save();
+
+        if($content->controller == 'gallery'){
+            $oGallery = $content->gallery()->first();
+            if(!$oGallery)
+                Gallery::create(['name'=>$content->name,'structure_id'=>$content->id,'image'=>$content->image]);
+        }
 
         return Main::redirect(
             Route('edit_structure',['id'=>$content->id]),

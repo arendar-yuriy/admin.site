@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Main;
 use App\Helpers\Table;
+use App\Http\Requests\RolesRequest;
 use Illuminate\Http\Request;
 use App\Role;
 use App\Permission;
@@ -97,13 +98,8 @@ class RolesController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postStore(Request $request)
+    public function postStore(RolesRequest $request)
     {
-        $this->validation->mergeRules('name','unique:'.str_plural($this->controller));
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
         $role = new Role();
         $role->name = $request->input('name');
         $role->display_name = $request->input('display_name');
@@ -146,12 +142,8 @@ class RolesController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function postUpdate(Request $request, $id)
+    public function postUpdate(RolesRequest $request, $id)
     {
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
         $role = Role::find($id);
         $role->display_name = $request->input('display_name');
         $role->description = $request->input('description');

@@ -78,7 +78,7 @@
 
 <div class="text-right">
     @if(@$content->id)
-        <a href="{{ route('sliders_add_unit',['id'=>Route::current()->parameter('id')]) }}" class="btn btn-danger">{{ trans('app.Add new slide') }} <i class="icon-arrow-right14 position-right"></i></a>
+        <a href="{{ route('sliders_add_unit',['id'=>Route::current()->parameter('id')]) }}" class="btn btn-danger">{{ trans('app.Add new slide') }} <i class=" icon-add position-left position-right"></i></a>
     @endif
         <button type="submit" class="btn btn-primary">{{ trans('app.submit') }} <i class="icon-arrow-right14 position-right"></i></button>
 </div>

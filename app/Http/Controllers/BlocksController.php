@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Content;
-use App\Helpers\Cpu;
 use App\Helpers\FormLang;
 use App\Helpers\Main;
 use App\Helpers\Table;
@@ -81,29 +80,9 @@ class BlocksController extends BaseController
         return view($this->controller.'.index',['table'=>$table]);
     }
 
-    public function postStore(Request $request)
+    public function postStore(Requests\BlocksRequest $request)
     {
-        $this->validation->mergeRules('alias','unique:contents');
-        $this->validation->mergeRules('alias','required:contents');
         $data = $request->all();
-
-        if(isset($this->model->validation_rules['alias_customer'])){
-            $this->validation->mergeRules('alias','unique:contents');
-            $this->validation->mergeRules('alias_customer','unique:contents');
-            if(isset($data['alias_priority']) && $data['alias_priority']==1){
-                $this->validation->mergeRules('alias_customer','required:contents');
-                $this->validation->mergeRules('alias_customer','unique:contents');
-            }
-
-            $alias = Cpu::generate($data['name'],$this->model);
-
-            $data['alias_ru'] = $alias['ru'];
-            $data['alias_en'] =  $alias['en'];
-        }
-
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
 
         if($this->isMultiLang)
             $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
@@ -116,24 +95,16 @@ class BlocksController extends BaseController
         );
     }
 
-    public function postUpdate(Request $request, $id)
+    public function postUpdate(Requests\BlocksRequest $request, $id)
     {
-        $this->validation->mergeRules('alias','required:contents');
         $content = $this->model->find($id);
         $data = $request->all();
 
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-        if($this->isMultiLang){
-            foreach($data as $name=>$item){
-                if(!in_array($name,$this->model->translatedAttributes))
-                    $content->{$name} = $item;
-                else
-                    $content->translate($data['locale'])->{$name} =  $item;
-            }
-        }else{
-            foreach($data as $name=>$item)
+        foreach($data as $name=>$item){
+            if(!in_array($name,$this->model->translatedAttributes))
                 $content->{$name} = $item;
+            else
+                $content->translate($data['locale'])->{$name} =  $item;
         }
 
         $content->save();

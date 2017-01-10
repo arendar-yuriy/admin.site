@@ -7,9 +7,6 @@ use App\Helpers\Main;
 use App\Helpers\Table;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 class FeedbackController extends BaseController
 {
     public function __construct(Request $request)

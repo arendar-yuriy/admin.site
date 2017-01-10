@@ -9,14 +9,10 @@ use App\Helpers\Cpu;
 use App\Helpers\FormLang;
 use App\Helpers\Main;
 use App\Helpers\Table;
-use App\Helpers\TreeBuilder;
 use App\Structure;
 use App\Tag;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Illuminate\Routing\Route;
-use Illuminate\Support;
 
 class ContentController extends BaseController
 {
@@ -130,7 +126,6 @@ class ContentController extends BaseController
         }
 
 
-       // dd($data);
         \App::setLocale($tempo_locale);
 
         $data['header'] = $table->columns;
@@ -166,28 +161,15 @@ class ContentController extends BaseController
         return view('content.edit',['content'=>$content,'translation'=>$content_lang,'type'=>$content->type]);
     }
 
-    public function postStore(Request $request)
+    public function postStore(Requests\ContentRequest $request)
     {
         $data = $request->all();
         $category_id = \Route::current()->parameter('structure_id');
-        $this->structure = Structure::find($category_id);
-        if(isset($this->model->validation_rules['alias_customer']) && $this->structure->controller == 'list'){
-            $this->validation->mergeRules('alias','unique:'.str_plural($this->controller));
-            $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-            if($data['alias_priority']==1){
-                $this->validation->mergeRules('alias_customer','required:'.str_plural($this->controller));
-                $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-            }
 
-            $alias = Cpu::generate($data['name'],$this->model);
+        $alias = Cpu::generate($data['name'],$this->model);
 
-            $data['alias_ru'] = $alias['ru'];
-            $data['alias_en'] =  $alias['en'];
-        }
-
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
+        $data['alias_ru'] = $alias['ru'];
+        $data['alias_en'] =  $alias['en'];
 
 
         $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
@@ -210,6 +192,7 @@ class ContentController extends BaseController
 
         $cs = ContentStructure::where('content_id','=',$content->id)->where('structure_id','=',$category_id)->first();
         $cs->position = $max + 1;
+        $cs->save();
 
         return Main::redirect(
             Route('edit_'.$this->controller,['id'=>$content->id]),
@@ -218,10 +201,8 @@ class ContentController extends BaseController
     }
 
 
-    public function postUpdate(Request $request,$id)
+    public function postUpdate(Requests\ContentRequest $request,$id)
     {
-
-
         $content = $this->model->find($id);
         $data = $request->all();
 
@@ -236,13 +217,6 @@ class ContentController extends BaseController
         }else{
             $content->tags()->detach();
         }
-
-        if(isset($data['alias_priority']) && $data['alias_priority']==1)
-            $this->validation->mergeRules('alias_customer','required:contents');
-
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
 
         foreach($data as $name=>$item){
             if(!in_array($name,$this->model->translatedAttributes))

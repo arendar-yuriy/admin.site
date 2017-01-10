@@ -55,6 +55,8 @@ class TreeBuilder{
 
                 if($this->active == $item['id'])
                     $str = str_replace('{active}','class="active"',$str);
+                else
+                    $str = str_replace('{active}','',$str);
 
                 if(isset($item['controller']) && $item['controller']){
                     if($item['controller']=='list')
@@ -98,6 +100,8 @@ class TreeBuilder{
 
                 if($this->active == $item['id'])
                     $str = str_replace('{active}','class="active"',$str);
+                else
+                    $str = str_replace('{active}','',$str);
                 $this->treeHTML.= $str;
             }
         }

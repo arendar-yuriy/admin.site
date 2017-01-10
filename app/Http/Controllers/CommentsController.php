@@ -6,16 +6,11 @@ use App\Comments;
 use App\Content;
 use App\ContentStructure;
 use App\Gallery;
-use App\Helpers\FormLang;
 use App\Helpers\Main;
-use App\Helpers\Table;
 use App\Structure;
-use App\Tag;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Routing\Route;
+
 
 class CommentsController extends BaseController
 {
@@ -98,11 +93,8 @@ class CommentsController extends BaseController
     }
 
 
-    public function postStore(Request $request)
+    public function postStore(Requests\CommentRequest $request)
     {
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
         $this->model->create([
             'comment'=>$request->get('comment'),
             'locale'=>\LaravelLocalization::getCurrentLocale(),

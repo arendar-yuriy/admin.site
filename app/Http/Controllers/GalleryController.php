@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Basket;
-use App\Content;
-use App\ContentStructure;
 use App\Gallery;
 use App\GalleryUnit;
 use App\Helpers\Cpu;
@@ -12,14 +10,9 @@ use App\Helpers\Crop;
 use App\Helpers\FormLang;
 use App\Helpers\Main;
 use App\Helpers\Table;
-use App\Helpers\TreeBuilder;
-use App\Structure;
 use App\Tag;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use Illuminate\Routing\Route;
-use Illuminate\Support;
 
 class GalleryController extends BaseController
 {
@@ -196,32 +189,20 @@ class GalleryController extends BaseController
         return Main::redirect('','302', trans('app.data saved'),trans('app.Saved'),'success');
     }
 
-    public function postStore(Request $request)
+    public function postStore(Requests\GalleryRequest $request)
     {
 
         $parent_id = \Route::current()->parameter('id');
         $data = $request->all();
 
-        if($parent_id !==null && !$data['parent_id']){
+        if($parent_id !== null && !$data['parent_id']){
             $data['parent_id'] = $parent_id;
         }
 
-        if(isset($this->model->validation_rules['alias_customer'])){
-            $this->validation->mergeRules('alias','unique:'.str_plural($this->controller));
-            $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-            if(isset($data['alias_priority']) && $data['alias_priority']==1){
-                $this->validation->mergeRules('alias_customer','required:'.str_plural($this->controller));
-                $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-            }
+        $alias = Cpu::generate($data['name'],$this->model);
 
-            $alias = Cpu::generate($data['name'],$this->model);
-
-            $data['alias_ru'] = $alias['ru'];
-            $data['alias_en'] =  $alias['en'];
-        }
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
+        $data['alias_ru'] = $alias['ru'];
+        $data['alias_en'] =  $alias['en'];
 
         if($this->isMultiLang)
             $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
@@ -231,6 +212,32 @@ class GalleryController extends BaseController
         return Main::redirect(
             Route('edit_'.$this->controller,['id'=>$content->id]),
             '302',trans('app.item was created'),trans('app.Saved'),'success'
+        );
+    }
+
+    /**
+     * Update current item
+     * @param Request $request
+     * @param $id -  id of current item
+     * @return array|string
+     */
+    public function postUpdate(Requests\GalleryRequest $request,$id)
+    {
+        $content = $this->model->find($id);
+        $data = $request->all();
+
+        foreach($data as $name=>$item){
+            if(!in_array($name,$this->model->translatedAttributes))
+                $content->{$name} = $item;
+            else
+                $content->translate($data['locale'])->{$name} =  $item;
+        }
+
+        $content->save();
+
+        return Main::redirect(
+            Route('edit_'.$this->controller,['id'=>$content->id]),
+            '302',trans('app.data saved'),trans('app.Saved'),'success'
         );
     }
 

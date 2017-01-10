@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Main;
-use App\Revision;
+use App\Http\Requests\SiteUserPasswordRequest;
+use App\Http\Requests\SiteUserRequest;
 use App\SiteUser;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
 use App\Role;
 use DB;
 use Hash;
@@ -73,17 +71,9 @@ class SiteUsersController extends BaseController
         return view($this->controller.'.create',compact('roles'));
     }
 
-    public function postNewPassword(Request $request,$id)
+    public function postNewPassword(SiteUserPasswordRequest $request,$id)
     {
         $content = $this->model->find($id);
-
-        if(trim($request->get('password')) == ''){
-            return ['password'=>trans('app.The password field is required')];
-        }
-
-        if($request->get('password') != $request->get('password_confirmation')){
-            return ['password_confirmation'=>trans('app.The password confirmation does not match')];
-        }
 
         $content->password = Hash::make($request->get('password'));
 
@@ -98,20 +88,8 @@ class SiteUsersController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postStore(Request $request)
+    public function postStore(SiteUserRequest $request)
     {
-
-        $this->validation->mergeRules('email','unique:users');
-
-        $this->validation->mergeRules('password','required');
-
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
-        if($request->get('password') != $request->get('password_confirmation')){
-            return ['password_confirmation'=>trans('app.The password confirmation does not match')];
-        }
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
@@ -145,11 +123,8 @@ class SiteUsersController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function postUpdate(Request $request, $id)
+    public function postUpdate(SiteUserRequest $request, $id)
     {
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
         $input = $request->all();
 
         $user = SiteUser::find($id);

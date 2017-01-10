@@ -622,9 +622,9 @@ Breadcrumbs::register('sliders_add_unit', function($breadcrumbs)
 
     $id = Route::current()->parameter('id');
 
-    $unit = \App\Sliders::find($id);
+    $slider = \App\Sliders::find($id);
 
-    $breadcrumbs->push($unit->name, route('edit_sliders',['id'=>$unit->slider->id]));
+    $breadcrumbs->push($slider->name, route('edit_sliders',['id'=>$slider->id]));
 
     $breadcrumbs->push(trans('app.Add new slide'), route('sliders_add_unit',['id'=>$id]));
 

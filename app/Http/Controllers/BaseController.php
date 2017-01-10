@@ -3,20 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Basket;
-use App\Content;
-use App\Helpers\Cpu;
 use App\Helpers\Crop;
 use App\Helpers\FormLang;
 use App\Helpers\Main;
 use App\Helpers\Table;
 use App\Helpers\TreeBuilder;
-use App\Structure;
 use Illuminate\Http\Request;
-use App\Gallery;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
 
 class BaseController extends Controller
 {
@@ -39,12 +32,6 @@ class BaseController extends Controller
      */
     public $model;
 
-
-    /**
-     *  instance of Validator for current model
-     * @object
-     */
-    protected $validation;
 
     /**
      * current controller
@@ -80,9 +67,6 @@ class BaseController extends Controller
     {
         view()->share('title',$this->title);
         view()->share('controller',$this->controller);
-
-        if($this->model && $request->all())
-            $this->validation = \Validator::make($request->all(),$this->model->validation_rules);
     }
 
 
@@ -292,86 +276,6 @@ class BaseController extends Controller
 
 
         return view($this->controller.'.edit',['content'=>$content,'translation'=>$content_lang]);
-    }
-
-    /**
-     * Create new record in database for current parts of admin application
-     * @param Request $request
-     * @return array|string
-     */
-    public function postStore(Request $request)
-    {
-        $data = $request->all();
-
-        if(isset($this->model->validation_rules['alias_customer']))
-        {
-            $this->validation->mergeRules('alias','unique:'.str_plural($this->controller));
-            $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-            if(isset($data['alias_priority']) && $data['alias_priority']==1)
-            {
-                $this->validation->mergeRules('alias_customer','required:'.str_plural($this->controller));
-                $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-            }
-
-            $alias = Cpu::generate($data['name'],$this->model);
-
-            $data['alias_ru'] = $alias['ru'];
-            $data['alias_en'] =  $alias['en'];
-        }
-
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
-        if($this->isMultiLang)
-            $data = Main::prepareDataToAdd($this->model->translatedAttributes,$data);
-
-        $content = $this->model->create($data);
-
-        return Main::redirect(
-            Route('edit_'.$this->controller,['id'=>$content->id]),
-            '302',trans('app.item was created'),trans('app.Saved'),'success'
-        );
-    }
-
-    /**
-     * Update current item
-     * @param Request $request
-     * @param $id -  id of current item
-     * @return array|string
-     */
-    public function postUpdate(Request $request,$id)
-    {
-        $content = $this->model->find($id);
-        $data = $request->all();
-
-        if(isset($this->model->validation_rules['alias_customer'])){
-                if(isset($data['alias_priority']) && $data['alias_priority']==1){
-                    $this->validation->mergeRules('alias_customer','required:'.str_plural($this->controller));
-                    $this->validation->mergeRules('alias_customer','unique:'.str_plural($this->controller));
-                }
-        }
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-        if($this->isMultiLang){
-            foreach($data as $name=>$item){
-                if(!in_array($name,$this->model->translatedAttributes))
-                    $content->{$name} = $item;
-                else
-                    $content->translate($data['locale'])->{$name} =  $item;
-            }
-        }else{
-            foreach($data as $name=>$item)
-                $content->{$name} = $item;
-        }
-
-        $content->save();
-
-        return Main::redirect(
-            Route('edit_'.$this->controller,['id'=>$content->id]),
-            '302',trans('app.data saved'),trans('app.Saved'),'success'
-        );
     }
 
 

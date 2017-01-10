@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Main;
-use App\Revision;
-use Carbon\Carbon;
+use App\Http\Requests\AdminUserPasswordRequest;
+use App\Http\Requests\AdminUserRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
 use DB;
@@ -69,7 +68,7 @@ class UsersController extends BaseController
         return view($this->controller.'.create',compact('roles'));
     }
 
-    public function postNewPassword(Request $request,$id)
+    public function postNewPassword(AdminUserPasswordRequest $request,$id)
     {
         if(!\Auth::user()->hasRole('programmer') && $id == 1 )
             abort(403);
@@ -97,20 +96,10 @@ class UsersController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postStore(Request $request)
+    public function postStore(AdminUserRequest $request)
     {
-
-        $this->validation->mergeRules('email','unique:admin_users');
-
-        $this->validation->mergeRules('password','required');
-
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
-        if($request->get('password') != $request->get('password_confirmation')){
-            return ['password_confirmation'=>trans('app.The password confirmation does not match')];
-        }
         $input = $request->all();
+
         $input['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
@@ -153,11 +142,8 @@ class UsersController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function postUpdate(Request $request, $id)
+    public function postUpdate(AdminUserRequest $request, $id)
     {
-        if($this->validation->fails())
-            return $this->validation->errors()->toJson();
-
         $input = $request->all();
 
         $user = User::find($id);

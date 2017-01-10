@@ -72,6 +72,7 @@ var Main = {
             data: $(form).serialize(),
             dataType: "json",
             success: function(data){
+                console.log(data);
                 Main.actionData(data,form);
             }
         });
@@ -91,6 +92,34 @@ var Main = {
         });
     },
     showValidationMessage: function(data,form){
+
+        $('input[type=text]').each(function () {
+            var id = this.name;
+            var el = $('#'+id+'-error');
+            el.html('');
+
+            $(this).closest('.form-group').removeClass('has-error').removeClass('has-feedback');
+            $('#'+id+'-error-icon').hide();
+        });
+
+        $('input[type=password]').each(function () {
+            var id = this.name;
+            var el = $('#'+id+'-error');
+            el.html('');
+
+            $(this).closest('.form-group').removeClass('has-error').removeClass('has-feedback');
+            $('#'+id+'-error-icon').hide();
+        });
+
+        $('textarea').each(function(){
+            var id = this.name;
+            var el = $('#'+id+'-error');
+            el.html('');
+
+            $(this).closest('.form-group').removeClass('has-error').removeClass('has-feedback');
+            $('#'+id+'-error-icon').hide();
+        });
+
         $(form).find('button[type=submit]').removeAttr("disabled", "disabled");
         $.each(data,function(i,value){
             var input = $('#'+i);

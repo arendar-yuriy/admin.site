@@ -57,13 +57,13 @@
 @if(Route::current()->getName() == 'sliders_add_unit')
     {!! Form::hidden('slider_id',Route::current()->parameter('id')) !!}
 @else
-    {!! Form::hidden('slider_id',$content->slider_id) !!}
+    {!! Form::hidden('slider_id',@$content->slider_id) !!}
 @endif
 
 <div class="text-right">
-    <a href="{{ route('edit_sliders',['id'=>$content->slider->id]) }}" class="btn btn-success"><i class="icon-arrow-left13 position-left"></i> {{ trans('app.back') }}</a>
+    <a href="{{ route('edit_sliders',['id'=>@$content->slider->id]) }}" class="btn btn-success"><i class="icon-arrow-left13 position-left"></i> {{ trans('app.back') }}</a>
     @if(@$content->id)
-        <a href="{{ route('sliders_add_unit',['id'=>$content->slider->id]) }}" class="btn btn-danger">{{ trans('app.Add new slide') }} <i class=" icon-add position-left position-right"></i></a>
+        <a href="{{ route('sliders_add_unit',['id'=>@$content->slider->id]) }}" class="btn btn-danger">{{ trans('app.Add new slide') }} <i class=" icon-add position-left position-right"></i></a>
     @endif
     <button type="submit" class="btn btn-primary">{{ trans('app.submit') }} <i class="icon-arrow-right14 position-right"></i></button>
 </div>
