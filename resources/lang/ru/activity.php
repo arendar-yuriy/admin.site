@@ -66,11 +66,11 @@ return [
     'delete_users'=>'Пользователь удален',
     'update_users_avatar'=>'Смена аватара пользователя',
     'users_crop'=>'Обрезка аватара пользователя',
-    'basket_restore'=>'Востановлено из корзины',
+    'basket_restore'=>'Восстановлено из корзины',
     'delete_basket_all'=>'Очистка корзини',
-    'basket_restore_all'=>'Востановление всей корзины',
+    'basket_restore_all'=>'Восстановление всей корзины',
     'delete_basket'=>'Удалено из корзини',
-    'group_recovery_basket'=>'Групповое востановление с корзины',
+    'group_recovery_basket'=>'Групповое восстановление с корзины',
     'group_delete_basket'=>'Групповое удаление с корзины',
 
 ];
